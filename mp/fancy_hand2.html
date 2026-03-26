@@ -228,11 +228,16 @@
       }
 
       function drawFingertips(hand, gx, gy) {
-        [4, 8, 12, 16, 20].forEach(idx => {
-          let k = hand.keypoints[idx];
+        hand.keypoints.forEach((k, idx) => {
           let x = map(k.x, 0, 640, 0, width) + gx, y = map(k.y, 0, 480, 0, height) + gy;
-          noFill(); stroke(255, 180); circle(x, y, 12);
-          fill(255, 150); textSize(9); text(`ID:${idx}`, x+15, y-10);
+          push();
+          colorMode(HSB, 255);
+          let ptColor = color((idx * 255 / 21) % 255, 220, 255);
+          fill(ptColor); noStroke(); 
+          circle(x, y, 20); // 放大座標點
+          fill(255, 180); textSize(11); 
+          text(`L${idx}`, x+15, y-10);
+          pop();
         });
       }
 
